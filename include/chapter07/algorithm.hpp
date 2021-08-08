@@ -8,7 +8,7 @@
 
 namespace chapter07
 {
-    int partition(std::vector<int> &array, size_t p, size_t r, bool &is_random)
+    size_t partition(std::vector<int> &array, size_t p, size_t r, bool is_random)
     {
         if (is_random)
         {
@@ -30,12 +30,12 @@ namespace chapter07
         return i;
     }
 
-    void basic_quick_sort_helper(std::vector<int> &array_copy, int p, int r, bool &is_random)
+    void basic_quick_sort_helper(std::vector<int> &array_copy, size_t p, size_t r, bool &is_random)
     {
         if (p < r)
         {
             int q = partition(array_copy, p, r, is_random);
-            basic_quick_sort_helper(array_copy, p, q - 1, is_random);
+            if(q != 0) basic_quick_sort_helper(array_copy, p, q - 1, is_random);
             basic_quick_sort_helper(array_copy, q + 1, r, is_random);
         }
     }
