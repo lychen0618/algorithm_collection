@@ -27,6 +27,12 @@ void test_quicksort()
     for(size_t i = 1; i < array1_copy.size(); ++i){
         assert(array1_copy[i - 1] <= array1_copy[i]);
     }
+
+    array1_copy = array1;
+    chapter07::random_quick_sort(array1_copy);
+    for(size_t i = 1; i < array1_copy.size(); ++i){
+        assert(array1_copy[i - 1] <= array1_copy[i]);
+    }
 }
 
 int main()
