@@ -62,6 +62,20 @@ void test_sort_method()
     {
         assert(array1_copy[i - 1] <= array1_copy[i]);
     }
+
+    array1_copy = array1;
+    chapter02::merge_sort(array1_copy);
+    for (size_t i = 1; i < array1_copy.size(); ++i)
+    {
+        assert(array1_copy[i - 1] <= array1_copy[i]);
+    }
+
+    array1_copy = array2;
+    chapter02::merge_sort(array1_copy);
+    for (size_t i = 1; i < array1_copy.size(); ++i)
+    {
+        assert(array1_copy[i - 1] <= array1_copy[i]);
+    }
 }
 
 int main()
