@@ -1,6 +1,7 @@
 #include <iostream>
 #include "chapter09/algorithm.hpp"
 #include "chapter07/algorithm.hpp"
+#include "chapter02/algorithm.hpp"
 using namespace std;
 
 void test_get_max_and_min()
@@ -30,7 +31,7 @@ void test_select_method(){
     assert(chapter09::worst_linear_time_select(array1_copy, 1) == 1);
 }
 
-void test_quicksort()
+void test_sort_method()
 {
     vector<int> array1{1, 5, 3, 7, 8};
     vector<int> array1_copy = array1;
@@ -46,12 +47,19 @@ void test_quicksort()
     {
         assert(array1_copy[i - 1] <= array1_copy[i]);
     }
+
+    array1_copy = array1;
+    chapter02::basic_insert_sort(array1_copy);
+    for (size_t i = 1; i < array1_copy.size(); ++i)
+    {
+        assert(array1_copy[i - 1] <= array1_copy[i]);
+    }
 }
 
 int main()
 {
     test_get_max_and_min();
     test_select_method();
-    test_quicksort();
+    test_sort_method();
     return 0;
 }
