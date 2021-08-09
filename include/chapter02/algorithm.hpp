@@ -8,17 +8,37 @@
 
 namespace chapter02
 {
+    //这样写不太好
+    // void range_insert_sort(std::vector<int> &array, size_t p, size_t r)
+    // {
+    //     for (size_t index = p + 1; index <= r; ++index)
+    //     {
+    //         for (size_t pre_index = index; pre_index > p; --pre_index)
+    //         {
+    //             if (array[pre_index] >= array[pre_index - 1])
+    //                 break;
+    //             else
+    //             {
+    //                 std::swap(array[pre_index], array[pre_index - 1]);
+    //             }
+    //         }
+    //     }
+    // }
+
     void range_insert_sort(std::vector<int> &array, size_t p, size_t r)
     {
         for (size_t index = p + 1; index <= r; ++index)
         {
+            int temp = array[index];
             for (size_t pre_index = index; pre_index > p; --pre_index)
             {
-                if (array[pre_index] >= array[pre_index - 1])
+                if (array[pre_index - 1] <= temp){
+                    array[pre_index] = temp;
                     break;
+                }
                 else
                 {
-                    std::swap(array[pre_index], array[pre_index - 1]);
+                    array[pre_index] = array[pre_index - 1];
                 }
             }
         }

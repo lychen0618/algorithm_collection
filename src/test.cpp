@@ -34,6 +34,7 @@ void test_select_method(){
 void test_sort_method()
 {
     vector<int> array1{1, 5, 3, 7, 8};
+    vector<int> array2{9, 1, 5, 3, 7, 8};
     vector<int> array1_copy = array1;
     chapter07::basic_quick_sort(array1_copy);
     for (size_t i = 1; i < array1_copy.size(); ++i)
@@ -49,6 +50,13 @@ void test_sort_method()
     }
 
     array1_copy = array1;
+    chapter02::basic_insert_sort(array1_copy);
+    for (size_t i = 1; i < array1_copy.size(); ++i)
+    {
+        assert(array1_copy[i - 1] <= array1_copy[i]);
+    }
+
+    array1_copy = array2;
     chapter02::basic_insert_sort(array1_copy);
     for (size_t i = 1; i < array1_copy.size(); ++i)
     {
