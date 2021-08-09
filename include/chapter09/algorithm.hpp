@@ -4,6 +4,7 @@
 #include <iostream>
 #include <algorithm>
 #include "chapter07/algorithm.hpp"
+#include "chapter02/algorithm.hpp"
 
 namespace chapter09
 {
@@ -58,22 +59,6 @@ namespace chapter09
         return _expect_linear_time_select(array, 0, array.size() - 1, i - 1);
     }
 
-    void insert_sort(std::vector<int> &array, size_t p, size_t r)
-    {
-        for (size_t index = p + 1; index <= r; ++index)
-        {
-            for (size_t pre_index = index; pre_index >= p; --pre_index)
-            {
-                if (array[pre_index] >= array[pre_index - 1])
-                    break;
-                else
-                {
-                    std::swap(array[pre_index], array[pre_index - 1]);
-                }
-            }
-        }
-    }
-
     int find_median(std::vector<int> &array, size_t p, size_t r)
     {
         std::vector<int> median_array;
@@ -81,7 +66,7 @@ namespace chapter09
         for (; index <= r; index += 5)
         {
             int l_most = std::min(index + 4, r);
-            insert_sort(array, index, l_most);
+            chapter02::range_insert_sort(array, index, l_most);
             median_array.push_back(array[(l_most + index) / 2]);
         }
         if (r - p < 5)
