@@ -23,7 +23,12 @@ SET(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall -std=c++11")
 
 # 查找当前目录下的所有源文件
 # 并将名称保存到 DIR_LIB_SRCS 变量
-aux_source_directory(./src DIR_SRCS)
+message("CMAKE_CURRENT_SOURCE_DIR: ${CMAKE_CURRENT_SOURCE_DIR}")
+file(GLOB_RECURSE srcs LIST_DIRECTORIES false RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 
-# 指定生成目标
-add_executable(test ${DIR_SRCS})
+foreach(srcfile IN LISTS srcs)
+    # Get file name without directory
+    get_filename_component(mainname ${srcfile} NAME_WE)
+    message("srcfile: ${srcfile}  exename: ${mainname}")
+    add_executable(${mainname} ${srcfile})
+endforeach()
