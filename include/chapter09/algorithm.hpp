@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CHAPTER09_ALGORITHM_H__
+#define CHAPTER09_ALGORITHM_H__
 #include <vector>
 #include <assert.h>
 #include <iostream>
@@ -106,3 +107,5 @@ namespace chapter09
         return _worst_linear_time_select(array, 0, array.size(), i - 1);
     }
 }
+
+#endif /* CHAPTER09_ALGORITHM_H__ */

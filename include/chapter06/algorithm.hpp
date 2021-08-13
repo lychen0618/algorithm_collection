@@ -1,4 +1,6 @@
-#pragma once
+#ifndef CHAPTER06_ALGORITHM_H__
+#define CHAPTER06_ALGORITHM_H__
+
 #include <vector>
 #include <iostream>
 #include <algorithm>
@@ -66,3 +68,5 @@ namespace chapter06
 
     
 }
+
+#endif /* CHAPTER06_ALGORITHM_H__ */

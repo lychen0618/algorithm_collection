@@ -1,4 +1,6 @@
-#pragma once
+#ifndef CHAPTER02_ALGORITHM_H__
+#define CHAPTER02_ALGORITHM_H__
+
 #include <vector>
 #include <assert.h>
 #include <iostream>
@@ -82,3 +84,5 @@ namespace chapter02
         merge_sort_(array, 0, array.size() - 1);
     }
 }
+
+#endif /* CHAPTER02_ALGORITHM_H__ */

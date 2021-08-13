@@ -1,4 +1,6 @@
-#pragma once
+#ifndef CHAPTER07_ALGORITHM_H__
+#define CHAPTER07_ALGORITHM_H__
+
 #include <vector>
 #include <assert.h>
 #include <iostream>
@@ -51,3 +53,5 @@ namespace chapter07
         basic_quick_sort_helper(array_copy, 0, array_copy.size() - 1, is_random);
     }
 }
+
+#endif /* CHAPTER07_ALGORITHM_H__ */
