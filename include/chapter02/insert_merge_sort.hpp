@@ -39,7 +39,7 @@ namespace chapter02
         auto right_iter = right.begin();
         for(auto iter = begin; iter != end; ++iter){
             if(compare(*left_iter, *right_iter)) *iter = *left_iter++;
-            else *iter = *right_iter;
+            else *iter = *right_iter++;
         }
     }
 
@@ -49,7 +49,7 @@ namespace chapter02
         auto size = std::distance(begin, end);
         if (size <= 1)
             return;
-        auto mid = begin + (size / 2 + 1);
+        auto mid = begin + size / 2;
         merge_sort(begin, mid, compare);
         merge_sort(mid, end, compare);
         _merge(begin, end, mid);

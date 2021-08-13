@@ -29,16 +29,33 @@ void test_sort()
     vector<double> array{1.0, 3.3, 6.3, 4.5, 2.9, 10.9};
     vector<double> array1;
     using chapter02::insert_sort;
+    using chapter02::merge_sort;
+    using chapter07::quick_sort;
+    
     array1 = array;
     insert_sort(array1.begin(), array1.end());
     util::check_non_decending_order(array1.begin(), array1.end());
 
-    using chapter02::merge_sort;
+    
     array1 = array;
     merge_sort(array1.begin(), array1.end());
     util::check_non_decending_order(array1.begin(), array1.end());
 
-    using chapter07::quick_sort;
+    
+    array1 = array;
+    quick_sort(array1.begin(), array1.end());
+    util::check_non_decending_order(array1.begin(), array1.end());
+
+    array.push_back(0.3);
+
+    array1 = array;
+    insert_sort(array1.begin(), array1.end());
+    util::check_non_decending_order(array1.begin(), array1.end());
+
+    array1 = array;
+    merge_sort(array1.begin(), array1.end());
+    util::check_non_decending_order(array1.begin(), array1.end());
+
     array1 = array;
     quick_sort(array1.begin(), array1.end());
     util::check_non_decending_order(array1.begin(), array1.end());
@@ -47,5 +64,6 @@ void test_sort()
 int main()
 {
     test_select();
+    test_sort();
     return 0;
 }
