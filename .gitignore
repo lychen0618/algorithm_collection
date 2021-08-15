@@ -2,7 +2,7 @@
 算法*
 
 # .vscode
-.vscode/
+# .vscode/
 
 # bin build
 bin/

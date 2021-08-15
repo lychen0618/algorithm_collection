@@ -1,0 +1,69 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "remove_dir",
+			"command": "rm",
+			"type": "shell",
+			"args": [
+				"-rf",
+				"build",
+				"bin"
+			],
+		},
+		{ // 在根文件夹中执行创建文件夹build的命令
+            // 除windows系统外执行的命令为`mkdir -p build`
+            // windows系统是在powershell中执行命令`mkdir -Force build`
+            "label": "build_dir",
+            "command": "mkdir",
+            "type": "shell",
+			"args": [
+				"-p",
+				"build",
+				"bin"
+			],
+			"dependsOn": [
+                "remove_dir" // 在task `build_dir` 后执行该task
+            ]
+        },
+		{
+			"label": "cmake",
+			"command":"cmake",
+			"type": "shell",
+			"args": [
+				"-G",
+				"Unix Makefiles",
+				"../"
+			],
+			"options": {
+                "cwd": "${workspaceFolder}/build",
+            },
+			"dependsOn": [
+                "build_dir" // 在task `build_dir` 后执行该task
+            ]
+
+		},
+		{
+			"label": "build",
+            "type": "shell",
+            "command": "cmake",
+			"args": [
+                "--build",
+                "./",
+                "--target",
+                "all",
+                "--"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/build",
+            },
+			"dependsOn": [
+                "cmake" // 在task `cmake` 后执行该task
+            ],
+			"group": {
+                "kind": "build",
+                "isDefault": true
+            }
+		}
+	]
+}

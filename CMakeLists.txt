@@ -18,6 +18,9 @@ if (CMAKE_BUILD_TYPE STREQUAL debug)
     add_definitions(-D_DEBUG)
 endif ()
 
+SET(CMAKE_MAKE_PROGRAMC "/usr/bin/make")
+SET(CMAKE_C_COMPILER "/usr/bin/gcc")
+SET(CMAKE_CXX_COMPILER "/usr/bin/g++")
 SET(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g -ggdb -std=c++11")
 SET(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall -std=c++11")
 

@@ -21,7 +21,6 @@ void test_select()
     EXPECT_EQUAL(expect_linear_time_select(array1.begin(), array1.end(), 2), 3);
     EXPECT_EQUAL(expect_linear_time_select(array1.begin(), array1.end(), 4), 9);
     EXPECT_EQUAL(expect_linear_time_select(array1.begin(), array1.end(), 0), 1);
-
 }
 
 void test_sort()
@@ -31,17 +30,15 @@ void test_sort()
     using chapter02::insert_sort;
     using chapter02::merge_sort;
     using chapter07::quick_sort;
-    
+
     array1 = array;
     insert_sort(array1.begin(), array1.end());
     util::check_non_decending_order(array1.begin(), array1.end());
 
-    
     array1 = array;
     merge_sort(array1.begin(), array1.end());
     util::check_non_decending_order(array1.begin(), array1.end());
 
-    
     array1 = array;
     quick_sort(array1.begin(), array1.end());
     util::check_non_decending_order(array1.begin(), array1.end());
@@ -65,5 +62,6 @@ int main()
 {
     test_select();
     test_sort();
+    cout << "finish" << endl;
     return 0;
 }
