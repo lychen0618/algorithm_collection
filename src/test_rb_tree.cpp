@@ -29,6 +29,7 @@ template <typename T>
 void check_rb_tree(rb_tree<T> rbt)
 {
     if(rbt.root()){
+        cout<<"start checking if rbt is a reb_black_tree!"<<endl;
         assert(rbt.root()->red == false);
         using node = chapter13::rb_treenode<T>;
         node *root = rbt.root();
