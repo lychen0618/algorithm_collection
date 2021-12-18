@@ -1,7 +1,9 @@
-#include "sort.h"
-#include "heap.h"
 #include <functional>
 #include <algorithm>
+#include <utility>
+
+#include "sort.h"
+#include "heap.h"
 
 // 小的元素不断浮出水面
 void bubble_sort(std::vector<int> &array)
@@ -58,7 +60,8 @@ void insert_sort(std::vector<int> &array)
         {
             if (array[j - 1] > temp)
                 array[j] = array[j - 1];
-            else break;
+            else
+                break;
         }
         array[j] = temp;
     }
@@ -117,7 +120,7 @@ void _merge_sort_recursion(std::vector<int> &array, std::vector<int> &temp_array
 void _merge_sort_iteration(std::vector<int> &array, std::vector<int> &temp_array)
 {
     int n = array.size();
-    for (int l = 1; l <= n / 2; l *= 2)
+    for (int l = 1; l < n; l *= 2)
     {
         for (int i = 0; i < n - l; i += 2 * l)
         {
@@ -132,8 +135,8 @@ void merge_sort(std::vector<int> &array)
     if (n < 2)
         return;
     std::vector<int> temp_array(n, 0);
-    _merge_sort_recursion(array, temp_array, 0, n - 1);
-    // _merge_sort_iteration(array, temp_array, 0, n - 1);
+    //_merge_sort_recursion(array, temp_array, 0, n - 1);
+    _merge_sort_iteration(array, temp_array);
 }
 
 int _partition(std::vector<int> &array, int l, int r)
@@ -185,23 +188,105 @@ void heap_sort(std::vector<int> &array)
     my_heap.heap_sort();
 }
 
+// 这里假设array中的数非负，然后最大数不太大
 void count_sort(std::vector<int> &array)
 {
     int n = array.size();
     if (n < 2)
         return;
+    const auto &p_min_max = std::minmax_element(array.begin(), array.end());
+    std::pair<int, int> min_max = {*p_min_max.first, *p_min_max.second};
+    int range = min_max.second - min_max.first + 1;
+    std::vector<int> count(range, 0);
+    for (auto &val : array)
+        count[val - min_max.first]++;
+    for (int i = 0; i < range; ++i)
+    {
+        count[i] += (i == 0 ? 0 : count[i - 1]);
+    }
+    std::vector<int> temp = array;
+    // 使排序稳定
+    for (auto it = temp.rbegin(); it != temp.rend(); ++it)
+    {
+        int val = *it;
+        array[count[val - min_max.first] - 1] = val;
+        count[val - min_max.first]--;
+    }
 }
 
+inline int _get_index(int val, const int &index)
+{
+    int res = 0;
+    for (int i = 0; i <= index; ++i, val /= 10)
+    {
+        res = val % 10;
+    }
+    return res;
+}
+
+// 借用计数排序的方法
 void radix_sort(std::vector<int> &array)
 {
     int n = array.size();
     if (n < 2)
         return;
+    int max_val = *(std::max_element(array.begin(), array.end()));
+    int bit = 1;
+    {
+        int max_copy = max_val;
+        while (max_copy != 0)
+        {
+            max_copy /= 10;
+            if (max_copy != 0)
+                ++bit;
+        }
+    }
+    std::vector<int> count(10, 0);
+    std::vector<int> temp(n);
+    std::vector<int> indices(n);
+    for (int index = 0; index < bit; ++index)
+    {
+        fill(count.begin(), count.end(), 0);
+        for (int i = 0; i < n; ++i)
+        {
+            indices[i] = _get_index(array[i], index);
+            count[indices[i]]++;
+        }
+        for (int i = 0; i < 10; ++i)
+        {
+            count[i] += (i == 0 ? 0 : count[i - 1]);
+        }
+        temp = array;
+        for (int i = n - 1; i >= 0; --i)
+        {
+            array[count[indices[i]] - 1] = temp[i];
+            count[indices[i]]--;
+        }
+    }
 }
 
-void bucket_sort(std::vector<int> &array)
+// 假设数据在一个范围内均匀分布，把这个范围平均分成几个桶
+void bucket_sort(std::vector<int> &array, int bucket) // 默认参数不能在声明和定义处同时指定
 {
     int n = array.size();
     if (n < 2)
         return;
+    const auto &p_min_max = std::minmax_element(array.begin(), array.end());
+    std::pair<int, int> min_max = {*p_min_max.first, *p_min_max.second};
+    std::vector<std::vector<int>> buckets(bucket);
+    int intervel = (min_max.second - min_max.first + 1) / bucket + 1;
+    for (auto &val : array)
+    {
+        buckets[val / intervel].emplace_back(val);
+    }
+    for (auto &b : buckets)
+    {
+        insert_sort(b);
+    }
+    int cur = 0;
+    for (auto &b : buckets)
+    {
+        for (auto &val : b)
+            array[cur++] = val;
+    }
 }

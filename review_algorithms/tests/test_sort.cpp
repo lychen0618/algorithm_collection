@@ -5,7 +5,7 @@
 #include <iterator>
 #include "sort.h"
 using namespace std;
-#define FLAG false
+#define FLAG true
 
 #define TEST_EQUAL(A, SORT)                               \
     do                                                    \
@@ -44,6 +44,9 @@ void test_equal(vector<int> &arr)
     TEST_EQUAL(arr, heap_sort);
 
     // linear sort
+    TEST_EQUAL(arr, count_sort);
+    TEST_EQUAL(arr, radix_sort);
+    TEST_EQUAL(arr, bucket_sort);
 }
 
 int main()
@@ -66,7 +69,7 @@ int main()
     }
 
     vector<int> arr2 = {2, 1};
-    time = 10;
+    time = 100;
     while (time--)
     {
         random_shuffle(arr2.begin(), arr2.end());
@@ -77,6 +80,20 @@ int main()
             cout << endl;
         }
         test_equal(arr2);
+    }
+
+    vector<int> arr3 = {22, 15, 99, 2, 0, 5, 356, 11, 33, 22, 88, 45, 6, 9, 0};
+    time = 100;
+    while (time--)
+    {
+        random_shuffle(arr3.begin(), arr3.end());
+        if (FLAG)
+        {
+            cout << "original: ";
+            copy(arr3.begin(), arr3.end(), oite);
+            cout << endl;
+        }
+        test_equal(arr3);
     }
 
     return 0;

@@ -20,6 +20,6 @@ void count_sort(std::vector<int>& array);
 
 void radix_sort(std::vector<int>& array);
 
-void bucket_sort(std::vector<int>& array);
+void bucket_sort(std::vector<int>& array, int bucket = 10);
 
 #endif // SORT_H
