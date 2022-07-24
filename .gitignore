@@ -12,6 +12,7 @@ build/
 *.d
 
 # Compiled Object files
+CMakeFiles/*
 *.slo
 *.lo
 *.o
@@ -40,3 +41,8 @@ build/
 *.exe
 *.out
 *.app
+
+# other
+CMakeCache.txt
+cmake_install.cmake
+Makefile
