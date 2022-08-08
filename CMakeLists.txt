@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.7.2)
 project(ALGORITHM_COLLECTION)
 
 # include路径
-include_directories(${PROJECT_SOURCE_DIR}/include)
+include_directories(${PROJECT_SOURCE_DIR}/include ${PROJECT_SOURCE_DIR}/review_algorithms)
 
 # 设置可执行文件生成路径
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/../bin)
@@ -24,6 +24,8 @@ SET(CMAKE_CXX_COMPILER "/usr/bin/g++")
 SET(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g -ggdb -std=c++11")
 SET(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall -std=c++11")
 
+add_subdirectory(review_algorithms)
+
 # 查找当前目录下的所有源文件
 # 并将名称保存到 DIR_LIB_SRCS 变量
 message("CMAKE_CURRENT_SOURCE_DIR: ${CMAKE_CURRENT_SOURCE_DIR}")
@@ -35,3 +37,5 @@ foreach(srcfile IN LISTS srcs)
     message("srcfile: ${srcfile}  exename: ${mainname}")
     add_executable(${mainname} ${srcfile})
 endforeach()
+
+target_link_libraries(test_str_search PUBLIC ReviewAlgs)
