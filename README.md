@@ -20,8 +20,8 @@
 
 * string match algorithms:
 
-    1. Rabin-Karp: BigPrime运行很慢，用空再看看
-    2. Knuth-Morris-Pratt(TODO)
+    1. Rabin-Karp: BigPrime运行很慢，有空再看看
+    2. Knuth-Morris-Pratt
     3. Boyer-Moore(TODO)
     4. dict-tree(TODO)
 * graph algorithms:
