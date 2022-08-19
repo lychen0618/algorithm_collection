@@ -39,3 +39,4 @@ foreach(srcfile IN LISTS srcs)
 endforeach()
 
 target_link_libraries(test_str_search PUBLIC ReviewAlgs)
+target_link_libraries(segment_tree_test PUBLIC ReviewAlgs)

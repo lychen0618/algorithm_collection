@@ -24,4 +24,7 @@
     2. Knuth-Morris-Pratt
     3. Boyer-Moore(TODO)
     4. dict-tree(TODO)
+
+* segment tree
+
 * graph algorithms:
