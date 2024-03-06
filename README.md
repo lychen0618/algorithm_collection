@@ -27,4 +27,6 @@
 
 * segment tree
 
+* union find set
+
 * graph algorithms:
