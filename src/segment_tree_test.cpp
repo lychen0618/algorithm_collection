@@ -9,10 +9,10 @@ int main() {
     SegmentTree st(data);
     assert(st.query(0, 2) == 2);
     assert(st.query(3, 3) == -1);
-    assert(st.query(3, 9) == -1);
-    st.update(0, 2, -1);
+    assert(st.query(3, 4) == -1);
+    st.update(-1, 0, 2);
     assert(st.query(0, 2) == 1);
     assert(st.query(3, 3) == -1);
-    assert(st.query(3, 9) == -1);
+    assert(st.query(3, 4) == -1);
     return 0;
 }

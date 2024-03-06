@@ -4,73 +4,63 @@
 #include <climits>
 #include <cmath>
 
-int SegmentTree::build_tree(const int& pos,
-                            const int& l,
-                            const int& r,
-                            const std::vector<int>& data) {
-    if (data_.size() < (pos + 1))
-        data_.resize(pos + 1);
-    data_[pos].range = {l, r};
-    data_[pos].val = data[l];
-    if (l != r) {
-        int mid = (l + r) / 2;
-        data_[pos].val = std::min(build_tree(pos * 2, l, mid, data),
-                                  build_tree(pos * 2 + 1, mid + 1, r, data));
-    }
-    return data_[pos].val;
-}
-
-SegmentTree::SegmentTree(const std::vector<int>& data) {
-    assert(data.size() > 0);
-    build_tree(1, 0, data.size() - 1, data);
-}
-
-void SegmentTree::move_change_down(const int& pos) {
-    if (data_[pos].change != 0) {
-        if (data_[pos].range.first != data_[pos].range.second) {
-            data_[pos * 2].change += data_[pos].change;
-            data_[pos * 2 + 1].change += data_[pos].change;
-            data_[pos * 2].val += data_[pos].change;
-            data_[pos * 2 + 1].val += data_[pos].change;
+void SegmentTree::buildTree(int root,
+                            int left,
+                            int right,
+                            const std::vector<int>& arr) {
+    if (left == right) {
+        if ((int)data_.size() <= root) {
+            data_.resize(root + 1);
         }
+        data_[root].val = arr[left];
+        return;
+    }
+    int mid = (left + right) / 2;
+    buildTree(root * 2 + 1, left, mid, arr);
+    buildTree(root * 2 + 2, mid + 1, right, arr);
+    data_[root].val =
+        std::min(data_[root * 2 + 1].val, data_[root * 2 + 2].val);
+}
+
+int SegmentTree::queryHelper(int pos, int l, int r, int ql, int qr) {
+    if (l > r || r < ql || l > qr) {
+        return INT_MAX;  // it depends
+    }
+    if (l >= ql && r <= qr) {
+        return data_[pos].val;
+    }
+    move_change_down(pos);
+    int mid = (l + r) / 2;
+    return std::min(queryHelper(pos * 2 + 1, l, mid, ql, qr),
+                    queryHelper(pos * 2 + 2, mid + 1, r, ql, qr));
+}
+
+void SegmentTree::updateHelper(
+    int pos, int l, int r, int ul, int ur, const int& val) {
+    if (l > r || r < ul || l > ur) {
+        return;
+    }
+    if (l >= ul && r <= ur) {
+        data_[pos].val += val;
+        data_[pos].change += val;
+        return;
+    }
+    move_change_down(pos);
+    int mid = (l + r) / 2;
+    updateHelper(pos * 2 + 1, l, mid, ul, ur, val);
+    updateHelper(pos * 2 + 2, mid + 1, r, ul, ur, val);
+    if (l != r) {
+        data_[pos].val =
+            std::min(data_[pos * 2 + 1].val, data_[pos * 2 + 2].val);
+    }
+}
+
+void SegmentTree::move_change_down(int pos) {
+    if ((pos * 2 + 1) < (int)data_.size()) {
+        data_[pos * 2 + 1].change += data_[pos].change;
+        data_[pos * 2 + 2].change += data_[pos].change;
+        data_[pos * 2 + 1].val += data_[pos].change;
+        data_[pos * 2 + 2].val += data_[pos].change;
         data_[pos].change = 0;
     }
-}
-
-int SegmentTree::query_helper(const int& left,
-                              const int& right,
-                              const int& pos) {
-    const auto& range = data_[pos].range;
-    if (left > range.second || right < range.first)
-        return INT_MAX;
-    if (left <= range.first && right >= range.second)
-        return data_[pos].val;
-    move_change_down(pos);
-    int mid = (range.first + range.second) / 2;
-    return std::min(
-        query_helper(std::max(left, range.first), mid, 2 * pos),
-        query_helper(mid + 1, std::min(right, range.second), 2 * pos + 1));
-}
-
-int SegmentTree::query(int left, int right) {
-    return query_helper(left, right, 1);
-}
-
-void SegmentTree::update(const int& left,
-                         const int& right,
-                         const int& change,
-                         const int& pos) {
-    const auto& range = data_[pos].range;
-    if (left > range.second || right < range.first)
-        return;
-    if (left <= range.first && right >= range.second) {
-        data_[pos].change += change;
-        data_[pos].val += change;
-        return;
-    }
-    move_change_down(pos);
-    int mid = (range.first + range.second) / 2;
-    update(std::max(left, range.first), mid, change, 2 * pos);
-    update(mid + 1, std::min(right, range.second), change, 2 * pos + 1);
-    data_[pos].val = std::min(data_[pos * 2].val, data_[pos * 2 + 1].val);
 }

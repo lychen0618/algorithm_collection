@@ -4,36 +4,36 @@
 
 class SegmentTree {
 private:
-    struct node {
-        /* data */
-        std::pair<int, int> range;
+    struct TreeNode {
         int val;
         int change;
-
-        node() {}
-        node(std::pair<int, int> r) : range(r), val(0), change(0) {}
+        TreeNode() : val(0), change(0) {}
+        TreeNode(const int& val) : val(val), change(0) {}
     };
 
-    std::vector<node> data_;
+    std::vector<TreeNode> data_;
 
-    int build_tree(const int& pos,
-                   const int& l,
-                   const int& r,
-                   const std::vector<int>& data);
+    const int n_;
 
-    void move_change_down(const int& pos);
+    void buildTree(int root, int left, int right, const std::vector<int>& arr);
 
-    int query_helper(const int& left, const int& right, const int& pos);
+    int queryHelper(int pos, int l, int r, int ql, int qr);
+
+    void updateHelper(int pos, int l, int r, int ul, int ur, const int& val);
+
+    void move_change_down(int pos);
 
 public:
-    SegmentTree(const std::vector<int>& data);
+    SegmentTree(const std::vector<int>& arr) : n_(arr.size()) {
+        buildTree(0, 0, n_ - 1, arr);
+    }
     ~SegmentTree() = default;
 
-    int query(int left, int right);
+    int query(int left, int right) {
+        return queryHelper(0, 0, n_ - 1, left, right);
+    }
 
-    // 只考虑一个区间的元素增加或减少相同的值
-    void update(const int& left,
-                const int& right,
-                const int& change,
-                const int& pos = 1);
+    void update(const int& val, int left, int right) {
+        updateHelper(0, 0, n_ - 1, left, right, val);
+    }
 };
