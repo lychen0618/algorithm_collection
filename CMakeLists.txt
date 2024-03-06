@@ -38,5 +38,6 @@ foreach(srcfile IN LISTS srcs)
     add_executable(${mainname} ${srcfile})
 endforeach()
 
+target_link_libraries(test_sort PUBLIC ReviewAlgs)
 target_link_libraries(test_str_search PUBLIC ReviewAlgs)
 target_link_libraries(test_segment_tree PUBLIC ReviewAlgs)

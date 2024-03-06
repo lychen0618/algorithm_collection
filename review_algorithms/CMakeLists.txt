@@ -1,1 +1,1 @@
-add_library(ReviewAlgs big_prime.cpp string_search.cpp segment_tree.cpp)
+add_library(ReviewAlgs big_prime.cpp string_search.cpp segment_tree.cpp sort.cpp)
